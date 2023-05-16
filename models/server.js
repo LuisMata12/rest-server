@@ -1,6 +1,7 @@
 import express from "express"
 import cors from "cors"
 import router from "../routes/user.js";
+import dbConection from "../db/config.js";
 
 
 class Server{
@@ -8,10 +9,18 @@ class Server{
         this.app = express();
         this.port= process.env.PORT;
         this.usuariosPath= '/api/users';
+
+        // conectar a base de datos
+        this.dbOnline();
+
         // middlewares
         this.meddlewares();
+
         // Routs 
         this.routs();
+    }
+    async dbOnline(){
+        await dbConection();
     }
     meddlewares(){
         // CORS
